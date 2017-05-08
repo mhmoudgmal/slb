@@ -1,16 +1,13 @@
 package slb
 
-import (
-	"errors"
-	"fmt"
-)
+import "fmt"
 
 // Register a given host to the list of hosts to balance the load between them.
 func (r *Registery) Register(host string) error {
 	for _, h := range r.Hosts {
 		if h == host {
-			fmt.Println("[INFO:Register] - host already registered")
-			return errors.New("Host already registered")
+			fmt.Println("[INFO:Register] - host already registered - ", host)
+			return fmt.Errorf("Host already registered %s", host)
 		}
 	}
 
@@ -28,8 +25,8 @@ func (r *Registery) Unregister(host string) error {
 		}
 	}
 
-	fmt.Println("[INFO::Unregister] - host does not exist")
-	return errors.New("Host dies not exist")
+	fmt.Println("[INFO:Unregister] - host does not exist - ", host)
+	return fmt.Errorf("Host does not exist - %s", host)
 }
 
 // Registery maintains the hosts list
