@@ -1,4 +1,4 @@
-package slb
+package registery
 
 import "fmt"
 

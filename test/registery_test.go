@@ -1,12 +1,14 @@
-package slb
+package test
 
 import (
 	"reflect"
 	"testing"
+
+	"github.com/mhmoudgmal/slb/registery"
 )
 
 func TestRegister(t *testing.T) {
-	r := Registery{
+	r := registery.Registery{
 		Hosts: make([]string, 0),
 	}
 
@@ -40,7 +42,7 @@ func TestRegister(t *testing.T) {
 }
 
 func TestUnregister(t *testing.T) {
-	r := Registery{
+	r := registery.Registery{
 		Hosts: []string{"http://h1.host", "http://h2.host", "http://h3.host"},
 	}
 
