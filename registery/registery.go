@@ -29,6 +29,16 @@ func (r *Registery) Unregister(host string) error {
 	return fmt.Errorf("Host does not exist - %s", host)
 }
 
+// IsEmpty checks if the registery is empty, hence can't handle the request
+func (r *Registery) IsEmpty() bool {
+	return len(r.Hosts) == 0
+}
+
+// Host returns the host at the specified index
+func (r *Registery) Host(idx int) string {
+	return r.Hosts[idx]
+}
+
 // Registery maintains the hosts list
 type Registery struct {
 	Hosts []string
