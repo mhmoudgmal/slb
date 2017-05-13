@@ -43,3 +43,11 @@ func (r *Registery) Host(idx int) string {
 type Registery struct {
 	Hosts []string
 }
+
+// IRegistery interface
+type IRegistery interface {
+	Register(host string) error
+	Unregister(host string) error
+	IsEmpty() bool
+	Host(idx int) string
+}
