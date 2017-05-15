@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/mhmoudgmal/slb/registery"
+	"github.com/mhmoudgmal/slb/registry"
 )
 
 var (
@@ -19,23 +19,23 @@ var (
 // - [ done:            for informing back when the request has finished]
 // - [ reqProcessor.Ch: for accepting requests messages to route it to the desired server]
 type Controller struct {
-	Registery *registery.Registery
+	Registry *registry.Registry
 }
 
 // Handle takes over the job from from (/) handler.
 func (c Controller) Handle(w http.ResponseWriter, req *http.Request) {
-	if c.Registery.IsEmpty() {
+	if c.Registry.IsEmpty() {
 		w.WriteHeader(503)
 		w.Write([]byte(http.StatusText(503)))
 		return
 	}
 
 	done := make(chan bool)
-	slbRequest := SLBRequest{
+	slbRequest := &SLBRequest{
 		ResponseWriter: w,
 		Request:        req,
 		Done:           done,
-		Host:           c.Registery.Host(currentHostIndex),
+		Host:           c.Registry.Host(currentHostIndex),
 	}
 
 	c.nextHost()
@@ -53,7 +53,7 @@ func (c Controller) Handle(w http.ResponseWriter, req *http.Request) {
 func (c Controller) nextHost() {
 	lock.RLock()
 	currentHostIndex++
-	if currentHostIndex == len(c.Registery.Hosts) {
+	if currentHostIndex == len(c.Registry.Hosts) {
 		currentHostIndex = 0
 	}
 	lock.RUnlock()

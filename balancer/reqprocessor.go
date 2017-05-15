@@ -6,13 +6,13 @@ import (
 )
 
 var (
-	requestChannel = make(chan SLBRequest)
+	requestChannel = make(chan *SLBRequest)
 )
 
 // NewRequestProcessor ....
-func NewRequestProcessor() struct{ Ch chan SLBRequest } {
+func NewRequestProcessor() struct{ Ch chan *SLBRequest } {
 	reqChannel := struct {
-		Ch chan SLBRequest
+		Ch chan *SLBRequest
 	}{requestChannel}
 
 	return reqChannel

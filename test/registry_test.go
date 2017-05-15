@@ -4,11 +4,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mhmoudgmal/slb/registery"
+	"github.com/mhmoudgmal/slb/registry"
 )
 
 func TestRegister(t *testing.T) {
-	r := registery.Registery{
+	r := registry.Registry{
 		Hosts: make([]string, 0),
 	}
 
@@ -42,7 +42,7 @@ func TestRegister(t *testing.T) {
 }
 
 func TestUnregister(t *testing.T) {
-	r := registery.Registery{
+	r := registry.Registry{
 		Hosts: []string{"http://h1.host", "http://h2.host", "http://h3.host"},
 	}
 

@@ -5,11 +5,11 @@ import (
 	"net/http"
 
 	"github.com/mhmoudgmal/slb/balancer"
-	"github.com/mhmoudgmal/slb/registery"
+	"github.com/mhmoudgmal/slb/registry"
 )
 
 var (
-	reg = &registery.Registery{
+	reg = &registry.Registry{
 		Hosts: []string{
 			"http://localhost:5000",
 			"http://localhost:7000",
@@ -19,12 +19,12 @@ var (
 
 func main() {
 	// Handle all incoming requests
-	http.HandleFunc("/", balancer.Controller{Registery: reg}.Handle)
+	http.HandleFunc("/", balancer.Controller{Registry: reg}.Handle)
 
 	go balancer.HandleRequests()
 
 	go http.ListenAndServe(":3000", nil)
-	go http.ListenAndServe(":3001", registery.Controller{Registery: reg})
+	go http.ListenAndServe(":3001", registry.Controller{Registry: reg})
 
 	// to exit...
 	var exit string

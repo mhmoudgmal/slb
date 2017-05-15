@@ -1,11 +1,11 @@
-package registery
+package registry
 
 import "net/http"
 
 // Controller as a Handler to handle the requests for register/unregister
 // implaemets http.Handler
 type Controller struct {
-	*Registery
+	*Registry
 	http.Handler
 }
 
@@ -13,9 +13,9 @@ func (rc Controller) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	path := req.URL.Path
 	switch path {
 	case "/register":
-		registerHost(rc.Registery, w, req)
+		registerHost(rc.Registry, w, req)
 	case "/unregister":
-		unregisterHost(rc.Registery, w, req)
+		unregisterHost(rc.Registry, w, req)
 	default:
 		w.WriteHeader(404)
 		w.Write([]byte(http.StatusText(404)))
@@ -25,7 +25,7 @@ func (rc Controller) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 /* -------------------------------------------------------------------------- */
 // callbacks
 
-func registerHost(r *Registery, w http.ResponseWriter, req *http.Request) {
+func registerHost(r *Registry, w http.ResponseWriter, req *http.Request) {
 	if err := r.Register(req.Host); err == nil {
 		w.WriteHeader(200)
 	} else {
@@ -34,7 +34,7 @@ func registerHost(r *Registery, w http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func unregisterHost(r *Registery, w http.ResponseWriter, req *http.Request) {
+func unregisterHost(r *Registry, w http.ResponseWriter, req *http.Request) {
 	if err := r.Unregister(req.Host); err == nil {
 		w.WriteHeader(200)
 	} else {
