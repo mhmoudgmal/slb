@@ -11,8 +11,8 @@ import (
 var (
 	reg = &registry.Registry{
 		Hosts: []string{
-			"http://localhost:5000",
-			"http://localhost:7000",
+			"localhost:5000",
+			"localhost:7000",
 		},
 	}
 )
